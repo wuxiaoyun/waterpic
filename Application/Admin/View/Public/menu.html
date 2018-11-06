@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+	<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/index.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/public.css"/>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.js"></script>
+	<!--[if lte IE 6]>
+<script src="/Public/js/DD_belatedPNG_0.0.8a.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('div,p,img,li,span,i');
+    </script>
+	<![endif]-->
+
+<script type="text/javascript">
+    $(function(){
+       //$(".menus").height($(window).height()-54).find(".menus_r").width($(window).width()-160-20);
+
+    /****************左侧菜单触发二级菜单******************/
+    $(".menus_l > ul > li.tab > .list_back").each(function(m,n){
+        $(n).click(function(){
+          $(this).next("ul").slideToggle().parent("li").addClass("change").siblings("li.tab").removeClass("change").find("ul").hide();
+        });
+    });
+
+        $(".menus_l > ul > li.tab > ul > li").each(function(m,n){
+            $(n).click(function(){
+                $(this).css("background-color","rgba(255, 255, 255, 0.1)").siblings("ul li").css('background-color','');;
+            });
+        });
+});
+
+</script>
+    <style type="text/css">
+        .menus_l ul li .list_ca, .menus_l ul li .list_cb, .menus_l ul li .list_cc, .menus_l ul li .list_cd, .menus_l ul li .list_ce, .menus_l ul li .list_cf, .menus_l ul li .list_cg, .menus_l ul li .list_ch {
+            line-height: 45px;
+        }
+        .ct li a {
+            color: #fff;
+        }
+    </style>
+</head>
+<body style="background:#191f26 none repeat scroll;">
+    <div class="menus">
+     	<div class="menus_l" id="notemenu" style="">
+            <ul>
+                <li class="cur">
+                    <div class="list_ca list_back"><i></i><a href="javascript:void(0)">内容管理</a></div>
+                </li>
+
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">产品与服务 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Product/index')}" target="mainframe">产品与服务列表</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">场景与应用 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Scene/index')}" target="mainframe">场景与应用列表</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">市场活动 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Bazaar/index')}" target="mainframe">市场活动列表</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">我们的客户 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Area/index')}" target="mainframe">区域列表</a></li>
+                        <li><a href="{:U('Client/index')}" target="mainframe">客户列表</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">关于道生 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('About/index')}" target="mainframe">道生简介</a></li>
+                        <li><a href="{:U('Event/index')}" target="mainframe">大事记列表</a></li>
+                        <li><a href="{:U('Aboutnews/index')}" target="mainframe">新闻列表</a></li>
+                        <li><a href="{:U('Abouthonor/index')}" target="mainframe">荣誉列表</a></li>
+                        <li><a href="{:U('Aboutcase/index')}" target="mainframe">案例分享列表</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">联系我们 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Contact/index')}" target="mainframe">地图列表</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                
+                <li class="tab">
+                    <div class="list_cg list_back">
+                        <a href="{:U('Message/index')}" target="mainframe">留言列表 </a></div>
+                    <hr>
+                </li>
+                
+                <li class="tab">
+                    <div class="list_cg list_back">
+                        <a href="{:U('Links/index')}" target="mainframe">友情链接列表 </a></div>
+                    <hr>
+                </li>
+                
+
+                <li class="cur">
+                    <div class="list_ca list_back xitong"><i></i><a href="javascript:void(0)">系统管理</a></div>
+                </li>
+
+
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">系统管理员 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Index/userlist')}" target="mainframe">用户列表</a></li>
+                       <!-- <li><a href="{:U('Position/index')}" target="mainframe">职位列表</a></li>-->
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">系统设置 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Down/index',array(type=>1))}" target="mainframe">底部信息</a></li>
+                        <li><a href="{:U('Jiben/index')}" target="mainframe">基本设置</a></li>
+                        <li><a href="{:U('Banner/index')}" target="mainframe">首页banner</a></li>
+                    </ul>
+                    <hr>
+                </li>
+                <li class="tab">
+                    <div class="list_cg list_back"><i></i><a href="javascript:void(0)">SEO系统 </a></div>
+                    <ul class="ct" style="display:none;">
+                        <li><a href="{:U('Tdk/index')}" target="mainframe">页面TDK</a></li>
+                    </ul>
+                    <hr>
+                </li>
+            </ul>
+
+
+        </div>
+
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+html, body, menu, ul, ol, li, p, div, form, h1, h2, h3, h4, h5, h6, dl, dt, dd, input,button { padding: 0; margin: 0; border: 0 }
+ul, ol, li { list-style: none outside none; }
+body { position: relative; -webkit-text-size-adjust: none; font: 14px/1.5 'Microsoft YaHei', '微软雅黑', '\5FAE\8F6F\96C5\9ED1'; color: #333;  overflow-x: hidden;  background-color:#f1f1f1 }
+a, a:visited { text-decoration: none; color: #333; outline: none; cursor: pointer; }
+a:hover { color: #000; }
+img { vertical-align: top; display: inline-block; border: none; }
+.btn { display: inline-block; vertical-align: middle }
+.fl { float: left; }
+.fr { float: right; }
+.fw { font-weight: bold; }
+.clear { content: ''; clear: both; display: block; height: 0; visibility: hidden; line-height: 0; zoom: 1; }
+.arial { font-family: 'arial'; }
+/*--------layout--------*/
+button{background: none; font: 14px/1.5 'Microsoft YaHei', '微软雅黑', '\5FAE\8F6F\96C5\9ED1'; outline: none}
+.a1,.a2,.a3,.a4,.a6,.a8,.a9,.a10,.a11,.a16,.a17{width: 50px; height: 30px; text-align: center; line-height: 30px;color: #fff;}
+.a5,.a7,.a14{width: 76px; height: 30px; text-align: center; line-height: 30px;color: #fff;}
+.a1,.a2,.a3{background: #25add1;}
+.a4{ background: #d34f30}
+.a5{ background: #5e6368}
+.a6{ background: #ea5a98}
+.a7{ background: #1ac7c3}
+.a8,.a9,.a10{ background:#ea5a98}
+.a11{ background: #1ac7c3}
+.a_l{ width: 159px; height: 30px;display: inline-block;background: #00b6ea; line-height: 30px; text-align: center; color:#fff;}
+.a12,.a13{  width: 70px; color: #fff  }
+.a14{ background: #9b8975}
+.a15{width: 50px; height: 30px; text-align: center; line-height: 30px;border: 1px solid #e5e5e5;background: #f6f6f6;color:#535353;}
+.a16{ background: #f09039}
+.a17{ background: #28b265}
+
+
+

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/index.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/public.css"/>
+    <link href="__PUBLIC__/Admin/lightbox2/dist/css/lightbox.css" rel="stylesheet">
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/remodal/remodal.css" rel="stylesheet">
+    <link href="__PUBLIC__/Admin/remodal/remodal-default-theme.css" rel="stylesheet">
+    <style>
+        .bor_cen tr td {
+            color:#333;
+        }
+        .clip,.clip a{
+            text-align:center;
+            width:200px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .remodal{
+            padding:0;
+        }
+        .black:hover{ color: red; }
+
+    </style>
+</head>
+<body>
+<div class="menus_r">
+    <div id="con_two_1" style="display: block;">
+        <div class="maps">
+            <i></i>
+            <p class="current">您当前的位置：<a href="{:U('Public/main')}">首页</a>&nbsp;>&nbsp; <a href="">用户列表</a></p>
+
+            <a href="{:U('Index/add')}" style="display: inline-block; float: right; line-height: 20px; margin-right: 50px;font-size: 12px; color: #fff;padding: 3px 10px; background: #00b7ed; text-align: center; margin-top: 10px;">添加用户</a>
+        </div>
+        <!--column end-->
+        <div class="form_con">
+            <!--
+            <div class="form_xuan">
+
+                <a href="javascript:void(0)" class="form_qx form_true selectall">全选</a>
+                <a href="javascript:void(0)" class="form_qx from_false unselected">反选</a>
+                <a href="javascript:void(0)" class="form_qx from_q select_f">取消</a>
+                <a href="javascript:void(0)" class="sc from_de">删除</a>
+                <a href="{:U('GroupGoods/addGroupGoods')}" class="tjwzhang add_article">添加商品</a>
+                <a class="selecs shangjia" href="javascript:void(0)">上架</a>
+                <a class="selecs xiajia" href="javascript:void(0)">下架</a>
+
+            </div>
+            -->
+            <table class="bor_cen"  style="border-collapse:collapse;">
+                <thead>
+                <tr class="mid_01" style="border-left:3px solid #e4e3e3">
+                    <td class="mid_one" style="border-right:1px solid #e4e3e3"></td>
+                    <td class="mid_t">用户名称</td>
+                    <td class="mid_one">密码</td>
+                    <!--<td class="mid_one">职位</td>-->
+                    <td class="mid_s">操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="List" key="k" id="vo">
+                    <tr  class="mid_02" style="border-left:3px solid #cfbba9" data-id="{$vo.channel_id}">
+                        <td class="mid_one" style="border-right:1px solid #e4e3e3">{$k}</td>
+                        <td class="mid_t">{$vo['username']}</td>
+                        <td class="mid_one" style="text-align:center">******</td>
+                        <!--<td class="mid_one" style="text-align:center">{$vo['group_name']}</td>-->
+                        <td class="mid_s" style="text-align:center">
+                            <a href="__URL__/del/id/{$vo['id']}" onclick="return confirm('您确定要删除吗?')">删除</a>
+                            |
+                            <a href="__URL__/edit/id/{$vo['id']}" >编辑</a>
+                        </td>
+                    </tr>
+
+                </volist>
+                </tbody>
+            </table>
+            <div class="interpret">
+                <div class="page">{$page}</div>
+            </div>
+            <span class="by">Powered by <a target="_blank" href="http://www.ggseo.cn/ezweb/">{:C('WebConfig_VersionName')}</a></span>
+        </div>
+        <!-- form_con end -->
+    </div>
+</div>
+<div id="modal" style="display: none; position:fixed; width:100%; height: 100%; top: 0px; left: 0px; background-color: rgba(0,0,0,0.4); text-align: center;">
+    <div style="background-color: #fff; color: #000; width: 360px; word-wrap: break-word; margin: 200px auto 0px;">
+        <span class="black" style=" float: right; margin-right: 10px; cursor: pointer; font-size: 20px; font-weight: 700;">&times;</span>
+    </div>
+
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+<script src="__PUBLIC__/Admin/lightbox2/dist/js/lightbox.min.js"></script>
+<script src="http://vjs.zencdn.net/c/video.js"></script>
+<script src="__PUBLIC__/Admin/remodal/remodal.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>后台管理</title>
+	<link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/index.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/public.css"/>
+</head>
+<body>
+	<div class="backstage">
+		<div class="webs fl" >网站内容管理系统</div>
+     <!--
+	    <div class="webs_r fr" style="width:176px;float:left">
+        	<ul class="webs_con">
+				<li><a href="__URL__/index/mflag/1" ><span>内容管理</span></a></li>
+				<li><a  onclick="document.location.href='__URL__/index/mflag/2';"  target="menuframe"><span>团购管理</span></a></li>
+
+        	</ul>
+        </div>
+  -->
+        <div class="webs_r fr">
+        	<ul class="webs_con">
+ 				<li class="adminid"></li>
+                <li class="adminids">登陆者&nbsp;:&nbsp;{$Think.session.name}</li>
+                <li><a href="{:U('Index/myeditpwd')}" target="mainframe"><span>修改密码</span></a></li>
+                <li><a href="{:U('Public/unlogin')}" title="退出"><span>退出</span></a></li>
+                <!--<li><a href="/index.php" target="_blank" title="前台"><span>前台</span></a></li>-->
+        	</ul>
+        </div>
+	</div>
+</body>
+</html>

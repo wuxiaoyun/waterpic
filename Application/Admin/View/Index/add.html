@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>修改密码</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/index.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/Admin/css/public.css"/>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.js"></script>
+</head>
+<body>
+
+<div class="menus_r">
+    <div class="maps">
+        <i></i>
+        <p class="current">您当前的位置：后台管理&nbsp;>&nbsp;添加用户</p>
+    </div>
+
+    <!--column end-->
+    <div class="clas_box">
+        <form action="__URL__/add" method="post" enctype="multipart/form-data" name="form1" id="form1" autocomplete="off">
+            <div class="class_con">
+                <label for="">用户名</label>
+                <input type="text" name="username" id="username"/>
+            </div>
+            <div class="class_con">
+                <label for="">新密码</label>
+                <input name="adminpwd2" id="adminpwd2" type="password" />　<span class="showErrorMessage" id="span_adminpwd2"></span>
+            </div>
+            <div class="class_con">
+                <label for="">确认新密码</label>
+                <input name="adminpwd3" id="adminpwd3" type="password" />　<span class="showErrorMessage" id="span_adminpwd3"></span>
+            </div>
+
+            <!--<div class="class_con">
+                <label for="">邮箱</label>
+                <input name="email" id="" type="email" />　<span class="showErrorMessage" id=""></span>
+            </div>-->
+
+            <!--<div class="class_con">
+                <label for="">职位</label>
+                <select name="zhiweiid" class="l_xiang">
+                    <volist name="List" id="vo">
+                        <option value="{$vo.id}">{$vo.title}</option>
+                    </volist>
+                </select>
+            </div>-->
+            <div class="de_y">
+                <button class="de_y_l" type="submit" onclick="return check();" id="onSubmit" style="background:#00b6ea">确定</button>
+                <a class="de_y_r" style="background:#9b8975" onclick="javascript:history.go(-1);">返回</a>
+            </div>
+
+            <span class="by">Powered by <a target="_blank" href="http://www.ggseo.cn/ezweb/">{:C('WebConfig_VersionName')}</a></span>
+        </form>
+    </div>
+    <!-- classify end -->
+
+</div>
+<script>
+    function check(){
+        var old=$("#adminpwd2").val();
+        var olds=$("#adminpwd3").val();
+        var username=$("#username").val();
+        if(!username){
+            alert("用户名不能为空");
+            $("#username").focus();
+            return false;
+        }
+        if(old.length<6){
+            alert("密码不能小于6位数");
+            $("#adminpwd2").focus();
+            return false;
+        }
+        if(!old){
+            alert("密码不能为空");
+            $("#adminpwd2").focus();
+            return false;
+        }
+        if(!olds){
+            alert("密码不能为空");
+            $("#adminpwd3").focus();
+            return false;
+        }
+        if(old!=olds){
+            alert("两次密码输入不一致");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+
+
+
