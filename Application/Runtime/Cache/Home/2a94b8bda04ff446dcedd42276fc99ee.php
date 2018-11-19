@@ -9,40 +9,32 @@
     <meta name="keywords" content="">
     <link href="/Public/Home/css/bootstrap.min.css" rel="stylesheet">
     <link href="/Public/Home/css/style.css" rel="stylesheet">
+    <link href="/Public/Home/js/bootstrap-fileinput/fileinput.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="/Public/Home/js/html5shiv.min.js"></script>
     <script src="/Public/Home/js/respond.min.js"></script>
     <![endif]-->
+    
+    <style>
+	.glyphicon.glyphicon-plus-sign{
+		display:none;
+	}
+	</style>
+
 </head>
 <body>
-
-<!--顶部结束-->
-	<div class="pic_body">
-		<form method="post" action="<?php echo U('Index/pic');?>" id="passForm" enctype="multipart/form-data" multipart="">
-		    
-		    <div id="Pic_pass">
-		        <p style="font-size: 20px;font-weight: bold;">请上传照片 </p>
-		        <p><span style="color: red">注：每张照片大小不可超过5M，且最多可以传十张，照片为手机拍摄照片，图片名格式以IMG_开头，如IMG_20180715_185030.jpg</span></p>
-		        <div class="picDiv">
-		            <div class="addImages">
-		                <input type="file" class="file" id="fileInput" multiple="" accept="image/png, image/jpeg, image/gif, image/jpg">
-		                <div class="text-detail">
-		                    <span>+</span>
-		                    <p>点击上传</p>
-		                </div>
-		            </div>
-		            
-		            <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
-					    <div id="innerdiv" style="position:absolute;">
-					        <img id="bigimg" src="" />
-					    </div>
-					</div> 
-		        </div>
-		        
-		    </div>
-		    <div class="msg" style="display: none;"></div>
-		    
-		    <div class="date">
+	 <form method="post" action="<?php echo U('Test/upload');?>" id="passForm" enctype="multipart/form-data" multipart="">
+		  <p class="form-group"><h3 style="margin:10px">请上传照片</h3></p>
+		  <p>
+		  	<span style="color: red;margin:10px">注：每张照片大小不可超过5M，且最多可以传十张，照片为手机拍摄照片，图片名格式以IMG_开头，如IMG_20180715_185030.jpg</span><br />
+		  	
+		  </p>
+		  
+		  <input name="images[]" type="file" id="uploadFile" multiple class="file-loading" accept="image/*" />
+		  <div id="error_msg" style="color:red;margin:10px"></div>
+		  <div id="result_msg" style="color:green;margin:10px;font-size:18px"></div>
+		  
+		  <div class="date" style="text-align:center; margin-top:50px">
 		    	<input type="text" id="test1" placeholder="照片日期" name="date"  />
 				<i class="icon_1 icon_time"></i>
 			</div>
@@ -50,21 +42,26 @@
 			 	<div class="progress-bar progress-bar-striped"><span class="percent">0%</span></div>
 			</div>
 			
-			<div class="confirm">
+			<div class="confirm" style="text-align:center">
 				<input type="hidden" id="confirm_tag"  value="0" />
 				<input type="button" id="confirm_pic"  value="添加水印" />
 				<a href="" id="download">下载水印图片</a>
 			</div>
-		</form>
-	</div>
-<!--底部开始-->
-
-<!--底部结束-->
+			
+			<div id='outerdiv' style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;'>
+			    <div id='innerdiv' style='position:absolute;'>
+			        <img id='bigimg' src='' />
+			    </div>
+			</div>
+     </form>
+    
 <script src="/Public/Home/js/jquery.min.js"></script>
 <script src="/Public/Home/js/bootstrap.min.js"></script>
 <script src="/Public/Home/laydate/layer.js"></script>
 <script src="/Public/Home/laydate/laydate.js"></script>
 <script src="/Public/Home/js/jquery.form.js"></script>
+<script src="/Public/Home/js/bootstrap-fileinput/fileinput.js"></script>
+<script src="/Public/Home/js/bootstrap-fileinput/zh.js"></script>
 <!-- Initialize Swiper -->
 <script type="text/javascript">
 //日期
@@ -72,239 +69,192 @@ laydate.render({
 	elem: '#test1',
 });
 
-$(document).ready(function(){
-		var picDiv = $(".picDiv");
-	
-    	//响应文件添加成功事件
-	    $("#fileInput").change(function(e, data){
-	    	change: function(e, data) {
-                if(data.files.length > 1){
-                    alert("Max 1 files are allowed")
-                    return false;
-                }
-            },
-            drop: function(e, data) {
-                if(data.files.length > 1){
-                    alert("Max 1 files are allowed")
-                    return false;
-                }
-            },
- 		
-	    	if($(".imageDiv").length>10) {
-	    		alert("不能超过10张照片");
-	    		return false;
-	    	}
-	        //创建FormData对象
-	        var data = new FormData();
-	        //为FormData对象添加数据
-	        $.each($('#fileInput')[0].files, function(i, file) {
-	            data.append('upload_file'+i, file);
-	        });
-	        $(".loading").show();    //显示加载图片
-	        //发送数据
-	        $.ajax({
-	            url:"<?php echo U('Index/upload');?>",
-	            type:'POST',  /*提交方式*/
-	            data:data,
-	            cache: false,
-	            contentType: false,        /*不可缺*/
-	            processData: false,         /*不可缺*/
-	            success:function(msg){
-	            	if (msg==6) {
-	            		alert("上传失败，图片超出5M");
-	            	} else {
-		            	var picHtml = '';
-		            	var msg = JSON.parse(msg);
-		            	for(var i=0;i<msg.length;i++){
-		            		var filename = msg[i].filename;
-		                	var filepath = msg[i].filepath;
-		                	
-		                	picHtml += "<div class='imageDiv'> <i class='delbtn' title='删除'>删除</i>" +
-		                	"<img class='pimg' id='img" + filename + "' src='/Public/Uploads/"+ filepath +"' /> " +
-		            		"<input type='hidden' name='pic[]' value='" + filename + "' /> " +
-		            		"<input type='hidden' id='path" + filename + "' name='path[]' value='" + filepath + "' class='path' /> " +
-		            		"</div>";
-		           		}
-		            	picDiv.prepend(picHtml);
-		            	forBox1($(".imageDiv"));
-		            	close($(".delbtn"));
-		            	view($(".pimg"));
-	            	}
-	            },
-	            error:function(){
-	                alert('上传出错');
-	            }
-	     });
-    });
-	    
-    //删除
-	function close(a){
-		a.each(function(){
-			$(this).on('click',function(){
-				var imageDiv = $(this).parent();
-				var file_path=$(this).parent().find('.path').val();
-				$.ajax({
-		            url:"<?php echo U('Index/delete');?>",
-		            type:'POST',  /*提交方式*/
-		            data:'file_path='+file_path+'&confirm_tag='+$("#confirm_tag").val(),
-		            success:function(msg){ 
-		            	imageDiv.remove();
-		            },
-		            error:function(){
-		                alert('删除出错');
-		            }
-		        });
-			})
-		})
-	}
-
-	//循环ID
-	function forBox1(a){
-		for(var i = 0; i < a.length; i++){
-			a.eq(i).attr("id",i);
-		};
-	}
-	    
-    //预览
-	function view(a){
-		a.each(function(){
-			$(this).click(function(){
-				var _this = $(this);//将当前的pimg元素作为_this传入函数  
-		        imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);  
-			})
-		})
-	}
-    
-	function imgShow(outerdiv, innerdiv, bigimg, _this){  
-        var src = _this.attr("src");//获取当前点击的pimg元素中的src属性  
-        $(bigimg).attr("src", src);//设置#bigimg元素的src属性  
-      
-            /*获取当前点击图片的真实大小，并显示弹出层及大图*/  
-        $("<img/>").attr("src", src).load(function(){  
-            var windowW = $(window).width();//获取当前窗口宽度  
-            var windowH = $(window).height();//获取当前窗口高度  
-            var realWidth = this.width;//获取图片真实宽度  
-            var realHeight = this.height;//获取图片真实高度  
-            var imgWidth, imgHeight;  
-            var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放  
-              
-            if(realHeight>windowH*scale) {
-            	//判断图片高度  
-                imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放  
-                imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度  
-                if(imgWidth>windowW*scale) {
-                	//如宽度扔大于窗口宽度  
-                    imgWidth = windowW*scale;//再对宽度进行缩放  
-                }  
-            } else if(realWidth>windowW*scale) {
-            	//如图片高度合适，判断图片宽度  
-                imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放  
-                imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度  
-            } else {
-            	//如果图片真实高度和宽度都符合要求，高宽不变  
-                imgWidth = realWidth;  
-                imgHeight = realHeight;  
-            }  
-            $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放  
-              
-            var w = (windowW-imgWidth)/2;//计算图片与窗口左边距  
-            var h = (windowH-imgHeight)/2;//计算图片与窗口上边距  
-            $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性  
-            $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg  
-        });  
-          
-        $(outerdiv).click(function(){
-        	//再次点击淡出消失弹出层  
-            $(this).fadeOut("fast");  
-        });  
-    }  
-	
-	$("#confirm_pic").click(function(){
-		var confirm_tag = $("#confirm_tag").val();
-		if (confirm_tag==1) {
-			alert("已经添加水印，请勿重复操作!");
-			return false;
-		}
-		var progress = $(".progress"); 
-		var progress_bar = $(".progress-bar");
-		var percent = $('.percent');
-		var formData = new FormData($("#passForm")[0]);
-		var pic = new Array();
-		var path = new Array();
-		$("input[name^='pic']").each(function(i, el) {
-			pic.push($(this).val());
-		});
-		$("input[name^='path']").each(function(i, el) {
-			var zz = $(this).val();
-			var suffix = zz.substr(0, zz.lastIndexOf("."));
-			var prefix = zz.substr(zz.lastIndexOf("."));
-			path.push(suffix+'-new'+prefix);
-		});
-		$("#passForm").ajaxSubmit({ 
-	  		dataType:  'json', //数据格式为json 
-	  		beforeSend: function() { //开始上传 
-	  			progress.show();
-	  			var percentVal = '0%';
-	  			progress_bar.width(percentVal);
-	  			percent.html(percentVal);
-	  		}, 
-	  		uploadProgress: function(event, position, total, percentComplete) { 
-	  			var percentVal = percentComplete + '%'; //获得进度 
-	  			progress_bar.width(percentVal); //上传进度条宽度变宽 
-	  			percent.html(percentVal); //显示上传进度百分比 
-	  		}, 
-	  		success: function(msg) {
-	  			var status = msg.status;
-	  			var message = msg.message;
-	  			if(status=='success') {
-	  				 var picHtml = ''; 
-	  				 for(var i=0;i<pic.length;i++){
-	            		var filename = pic[i];
-	                	var filepath = path[i];
-	                	
-	                	picHtml += "<div class='imageDiv' id=" + i + "> <i class='delbtn' title='删除'>删除</i>" +
-	                	"<img class='pimg' id='img" + filename + "' src='/Public/Uploads/"+ filepath +"' /> " +
-	            		"<input type='hidden' name='pic[]' value='" + filename + "' /> " +
-	            		"<input type='hidden' id='path" + filename + "' name='path[]' value='" + filepath + "' class='path' /> " +
-	            		"</div>";
-	           		 }
-	  				 picHtml += "<div id='outerdiv' style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;'>"+
-								    "<div id='innerdiv' style='position:absolute;'>"+
-								        "<img id='bigimg' src='' />"+
-								    "</div>"+
-								"</div> ";
-	  				  $('.picDiv').html(picHtml);
-	  				  forBox1($(".imageDiv"));
-	            	  close($(".delbtn"));
-	            	  view($(".pimg"));
-	  				  
-	  				  $("#confirm_tag").val("1");
-	  				  
-	  				  //下载水印图片
-	  			      var link="<?php echo U('Index/picDownload');?>?path="+path;
-	  			      $("#download").attr("href",link);
-	  			      $("#download").show();
-	  				  //alert(message);
-					  //window.location.reload();
-					  //setTimeout("window.location.reload();",1000);
-				}
-				if(status=='fail') {
-					 alert(message);
-					 progress.hide();
-					 return false;
-				}
-	  		}, 
-	  		error:function(){
-	  			alert("异常！");
-		        progress.hide();
-		        return false;
-	  		} 
-	  	});
-		
+	$(function() {
+		 //初始化fileinput
+		 var fileInput = new FileInput();
+		 fileInput.Init("uploadFile", "<?php echo U('Test/upload');?>");
 	});
+
+	//初始化fileinput
+	var FileInput = function() {
+	      var oFile = new Object();
+
+	      //初始化fileinput控件（第一次初始化）
+	      oFile.Init = function(ctrlName, uploadUrl) {
+		      var control = $('#' + ctrlName);
+		      //初始化上传控件的样式
+			  control.fileinput({
+				   language: 'zh', //设置语言
+				   uploadUrl: "<?php echo U('Test/upload');?>", //上传的地址
+				   allowedFileExtensions: ['jpg', 'png', 'gif'], //接收的文件后缀
+				   uploadAsync: false, //默认同步上传
+				   //showBrowse: false,  //是否显示浏览按钮
+				   //showPreview: false, //是否显示预览区域
+				   showUpload: false, //是否显示上传按钮
+				   showRemove: true, //显示移除按钮
+				   showCaption: true, //是否显示标题
+				   dropZoneEnabled: true, //是否显示拖拽区域
+				   //deleteUrl: "<?php echo U('Test/delete');?>", //删除图片时的请求路径
+				   //minImageWidth: 50, //图片的最小宽度
+				   //minImageHeight: 50,//图片的最小高度
+				   //maxImageWidth: 1000,//图片的最大宽度
+				   //maxImageHeight: 1000,//图片的最大高度
+				   maxFileSize:5*1024,//单位为kb，如果为0表示不限制文件大小
+				   //minFileCount: 0,
+				   maxFileCount: 10, //表示允许同时上传的最大文件个数
+				   enctype: 'multipart/form-data',
+				   browseClass: "btn btn-primary", //按钮样式: btn-default、btn-primary、btn-danger、btn-info、btn-warning  
+				   previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+				   layoutTemplates : {
+		                /* actionDelete:‘‘, */ //去除上传预览的缩略图中的删除图标
+		                actionUpload : '', //去除上传预览缩略图中的上传图片；
+		                /* actionZoom:‘‘ */   //去除上传预览缩略图中的查看详情预览的缩略图标。
+		            },
+			  });
+		      
+		 }
+	      
+		 return oFile; //这里必须返回oFile对象，否则FileInput组件初始化不成功
+	};
+	
+	
+		$(document).ready(function(){
+			
+		    //预览
+			function view(a){
+				a.each(function(){
+					$(this).click(function(){
+						//var _this = $(this);//将当前的pimg元素作为_this传入函数  
+						var _this = $(this).parents(".kv-preview-thumb").find("img");
+				        imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);  
+					})
+				})
+			}
+		    
+		    
+			function imgShow(outerdiv, innerdiv, bigimg, _this){  
+		        var src = _this.attr("src");//获取当前点击的pimg元素中的src属性  
+		        $(bigimg).attr("src", src);//设置#bigimg元素的src属性  
+		      
+		            /*获取当前点击图片的真实大小，并显示弹出层及大图*/  
+		        $("<img/>").attr("src", src).load(function(){  
+		            var windowW = $(window).width();//获取当前窗口宽度  
+		            var windowH = $(window).height();//获取当前窗口高度  
+		            var realWidth = this.width;//获取图片真实宽度  
+		            var realHeight = this.height;//获取图片真实高度  
+		            var imgWidth, imgHeight;  
+		            var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放  
+		              
+		            if(realHeight>windowH*scale) {
+		            	//判断图片高度  
+		                imgHeight = windowH*scale;//如大于窗口高度，图片高度进行缩放  
+		                imgWidth = imgHeight/realHeight*realWidth;//等比例缩放宽度  
+		                if(imgWidth>windowW*scale) {
+		                	//如宽度扔大于窗口宽度  
+		                    imgWidth = windowW*scale;//再对宽度进行缩放  
+		                }  
+		            } else if(realWidth>windowW*scale) {
+		            	//如图片高度合适，判断图片宽度  
+		                imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放  
+		                imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度  
+		            } else {
+		            	//如果图片真实高度和宽度都符合要求，高宽不变  
+		                imgWidth = realWidth;  
+		                imgHeight = realHeight;  
+		            }  
+		            $(bigimg).css("width",imgWidth);//以最终的宽度对图片缩放  
+		              
+		            var w = (windowW-imgWidth)/2;//计算图片与窗口左边距  
+		            var h = (windowH-imgHeight)/2;//计算图片与窗口上边距  
+		            $(innerdiv).css({"top":h, "left":w});//设置#innerdiv的top和left属性  
+		            $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg  
+		        });  
+		          
+		        $(outerdiv).click(function(){
+		        	//再次点击淡出消失弹出层  
+		            $(this).fadeOut("fast");  
+		        });  
+		    }  
+			
+			$("#confirm_pic").click(function(){
+				var confirm_tag = $("#confirm_tag").val();
+				if (confirm_tag==1) {
+					alert("已经添加水印，请勿重复操作！ 如有需要请刷新页面重新操作！");
+					return false;
+				}
+				var progress = $(".progress"); 
+				var progress_bar = $(".progress-bar");
+				var percent = $('.percent');
+				var formData = new FormData($("#passForm")[0]);
+				$("#passForm").ajaxSubmit({ 
+			  		dataType:  'json', //数据格式为json 
+			  		beforeSend: function() { //开始上传 
+			  			progress.show();
+			  			var percentVal = '0%';
+			  			progress_bar.width(percentVal);
+			  			percent.html(percentVal);
+			  		}, 
+			  		uploadProgress: function(event, position, total, percentComplete) { 
+			  			var percentVal = percentComplete + '%'; //获得进度 
+			  			progress_bar.width(percentVal); //上传进度条宽度变宽 
+			  			percent.html(percentVal); //显示上传进度百分比 
+			  		}, 
+			  		success: function(msg) {
+			  			var error_msg = '';
+			  			for(var i = 0; i < msg.length; i++){
+			  				if(msg[i]['status'] == 'error') {
+			  					//添加水印出错信息
+			  					error_msg += '<p>'+msg[i]['msg']+'</p>';
+			  				}
+						};
+						$("#error_msg").html(error_msg)
+						
+						var path = new Array();
+						imglist = $(".kv-preview-thumb");
+						var result_count = 0;
+						imglist.each(function(i){
+							if(msg[i]['status'] != 'error') {
+								//水印图片替换掉之前的图片
+								$(this).find("img").attr("src", msg[i]['msg']);
+								path.push(msg[i]['msg']);
+								result_count++;
+							}
+						})
+						
+						
+						//隐藏原来的预览按钮，展示新的预览按钮
+						$(".kv-file-zoom").css('display','none'); 
+						var viewlist = $(".file-footer-buttons");
+						var viewbutton = "<button type='button' class='pimg btn btn-sm btn-kv btn-default btn-outline-secondary'><i class='glyphicon glyphicon-zoom-in'></i></div>"
+						viewlist.each(function(){
+							$(this).append(viewbutton);
+						})
+						
+						$("#result_msg").html("成功添加水印图片 "+result_count+" 张")
+						$("#confirm_tag").val("1");
+						$("#uploadFile").attr('disabled',true);
+		            	view($(".pimg"));
+		            	
+		            	//下载水印图片
+		  			    var link="<?php echo U('Test/picDownload');?>?path="+path;
+		  			    $("#download").attr("href",link);
+		  			    $("#download").show();
+		  			    
+		  			    setTimeout(function(){progress.hide()}, 2000);
+		  			  	
+			  		}, 
+			  		error:function(){
+			  			alert("异常！");
+				        progress.hide();
+				        return false;
+			  		} 
+			  	});
+			
+		});
 	
 });
-
+	
+	
 
 </script>
 </body>
