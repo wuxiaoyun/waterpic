@@ -1,6 +1,6 @@
 <?php
 namespace Home\Controller;
-class TestController extends PublicController  {
+class IndexController extends PublicController  {
     public function index(){
         $this->display();
     }
