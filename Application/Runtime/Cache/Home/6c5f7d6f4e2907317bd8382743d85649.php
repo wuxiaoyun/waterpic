@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -7,12 +7,12 @@
     <title>照片加日期水印</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <link href="__PUBLIC__/Home/css/bootstrap.min.css" rel="stylesheet">
-    <link href="__PUBLIC__/Home/css/style.css" rel="stylesheet">
-    <link href="__PUBLIC__/Home/js/bootstrap-fileinput/fileinput.css" rel="stylesheet">
+    <link href="/Public/Home/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Public/Home/css/style.css" rel="stylesheet">
+    <link href="/Public/Home/js/bootstrap-fileinput/fileinput.css" rel="stylesheet">
     <!--[if lt IE 9]>
-    <script src="__PUBLIC__/Home/js/html5shiv.min.js"></script>
-    <script src="__PUBLIC__/Home/js/respond.min.js"></script>
+    <script src="/Public/Home/js/html5shiv.min.js"></script>
+    <script src="/Public/Home/js/respond.min.js"></script>
     <![endif]-->
     
     <style>
@@ -23,7 +23,7 @@
 
 </head>
 <body>
-	 <form method="post" action="{:U('Test/upload')}" id="passForm" enctype="multipart/form-data" multipart="">
+	 <form method="post" action="<?php echo U('Test/upload');?>" id="passForm" enctype="multipart/form-data" multipart="">
 		  <p class="form-group"><h3 style="margin:10px">请上传照片</h3></p>
 		  <p>
 		  	<span style="color: red;margin:10px">注：每张照片大小不可超过5M，且最多可以传十张，照片为手机拍摄照片，图片名格式以IMG_开头，如IMG_20180715_185030.jpg</span><br />
@@ -55,13 +55,13 @@
 			</div>
      </form>
     
-<script src="__PUBLIC__/Home/js/jquery.min.js"></script>
-<script src="__PUBLIC__/Home/js/bootstrap.min.js"></script>
-<script src="__PUBLIC__/Home/laydate/layer.js"></script>
-<script src="__PUBLIC__/Home/laydate/laydate.js"></script>
-<script src="__PUBLIC__/Home/js/jquery.form.js"></script>
-<script src="__PUBLIC__/Home/js/bootstrap-fileinput/fileinput.js"></script>
-<script src="__PUBLIC__/Home/js/bootstrap-fileinput/zh.js"></script>
+<script src="/Public/Home/js/jquery.min.js"></script>
+<script src="/Public/Home/js/bootstrap.min.js"></script>
+<script src="/Public/Home/laydate/layer.js"></script>
+<script src="/Public/Home/laydate/laydate.js"></script>
+<script src="/Public/Home/js/jquery.form.js"></script>
+<script src="/Public/Home/js/bootstrap-fileinput/fileinput.js"></script>
+<script src="/Public/Home/js/bootstrap-fileinput/zh.js"></script>
 <!-- Initialize Swiper -->
 <script type="text/javascript">
 //日期
@@ -72,7 +72,7 @@ laydate.render({
 	$(function() {
 		 //初始化fileinput
 		 var fileInput = new FileInput();
-		 fileInput.Init("uploadFile", "{:U('Test/upload')}");
+		 fileInput.Init("uploadFile", "<?php echo U('Test/upload');?>");
 	});
 
 	//初始化fileinput
@@ -85,7 +85,7 @@ laydate.render({
 		      //初始化上传控件的样式
 			  control.fileinput({
 				   language: 'zh', //设置语言
-				   uploadUrl: "{:U('Test/upload')}", //上传的地址
+				   uploadUrl: "<?php echo U('Test/upload');?>", //上传的地址
 				   allowedFileExtensions: ['jpg', 'png', 'gif'], //接收的文件后缀
 				   uploadAsync: false, //默认同步上传
 				   //showBrowse: false,  //是否显示浏览按钮
@@ -94,7 +94,7 @@ laydate.render({
 				   showRemove: true, //显示移除按钮
 				   showCaption: true, //是否显示标题
 				   dropZoneEnabled: true, //是否显示拖拽区域
-				   //deleteUrl: "{:U('Test/delete')}", //删除图片时的请求路径
+				   //deleteUrl: "<?php echo U('Test/delete');?>", //删除图片时的请求路径
 				   //minImageWidth: 50, //图片的最小宽度
 				   //minImageHeight: 50,//图片的最小高度
 				   //maxImageWidth: 1000,//图片的最大宽度
@@ -236,7 +236,7 @@ laydate.render({
 		            	view($(".pimg"));
 		            	
 		            	//下载水印图片
-		  			    var link="{:U('Test/picDownload')}?path="+path;
+		  			    var link="<?php echo U('Test/picDownload');?>?path="+path;
 		  			    $("#download").attr("href",link);
 		  			    $("#download").show();
 		  			    

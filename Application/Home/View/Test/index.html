@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -7,18 +7,18 @@
     <title>照片加日期水印</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <link href="/Public/Home/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/Public/Home/css/style.css" rel="stylesheet">
+    <link href="__PUBLIC__/Home/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/Home/css/style.css" rel="stylesheet">
     <!--[if lt IE 9]>
-    <script src="/Public/Home/js/html5shiv.min.js"></script>
-    <script src="/Public/Home/js/respond.min.js"></script>
+    <script src="__PUBLIC__/Home/js/html5shiv.min.js"></script>
+    <script src="__PUBLIC__/Home/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-
+<include file="Public:header" />
 <!--顶部结束-->
 	<div class="pic_body">
-		<form method="post" action="<?php echo U('Index/pic');?>" id="passForm" enctype="multipart/form-data" multipart="">
+		<form method="post" action="{:U('Index/pic')}" id="passForm" enctype="multipart/form-data" multipart="">
 		    
 		    <div id="Pic_pass">
 		        <p style="font-size: 20px;font-weight: bold;">请上传照片 </p>
@@ -58,13 +58,13 @@
 		</form>
 	</div>
 <!--底部开始-->
-
+<include file="Public:footer" />
 <!--底部结束-->
-<script src="/Public/Home/js/jquery.min.js"></script>
-<script src="/Public/Home/js/bootstrap.min.js"></script>
-<script src="/Public/Home/laydate/layer.js"></script>
-<script src="/Public/Home/laydate/laydate.js"></script>
-<script src="/Public/Home/js/jquery.form.js"></script>
+<script src="__PUBLIC__/Home/js/jquery.min.js"></script>
+<script src="__PUBLIC__/Home/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/Home/laydate/layer.js"></script>
+<script src="__PUBLIC__/Home/laydate/laydate.js"></script>
+<script src="__PUBLIC__/Home/js/jquery.form.js"></script>
 <!-- Initialize Swiper -->
 <script type="text/javascript">
 //日期
@@ -77,19 +77,6 @@ $(document).ready(function(){
 	
     	//响应文件添加成功事件
 	    $("#fileInput").change(function(e, data){
-	    	change: function(e, data) {
-                if(data.files.length > 1){
-                    alert("Max 1 files are allowed")
-                    return false;
-                }
-            },
-            drop: function(e, data) {
-                if(data.files.length > 1){
-                    alert("Max 1 files are allowed")
-                    return false;
-                }
-            },
- 		
 	    	if($(".imageDiv").length>10) {
 	    		alert("不能超过10张照片");
 	    		return false;
@@ -103,7 +90,7 @@ $(document).ready(function(){
 	        $(".loading").show();    //显示加载图片
 	        //发送数据
 	        $.ajax({
-	            url:"<?php echo U('Index/upload');?>",
+	            url:"{:U('Index/upload')}",
 	            type:'POST',  /*提交方式*/
 	            data:data,
 	            cache: false,
@@ -120,7 +107,7 @@ $(document).ready(function(){
 		                	var filepath = msg[i].filepath;
 		                	
 		                	picHtml += "<div class='imageDiv'> <i class='delbtn' title='删除'>删除</i>" +
-		                	"<img class='pimg' id='img" + filename + "' src='/Public/Uploads/"+ filepath +"' /> " +
+		                	"<img class='pimg' id='img" + filename + "' src='__PUBLIC__/Uploads/"+ filepath +"' /> " +
 		            		"<input type='hidden' name='pic[]' value='" + filename + "' /> " +
 		            		"<input type='hidden' id='path" + filename + "' name='path[]' value='" + filepath + "' class='path' /> " +
 		            		"</div>";
@@ -144,7 +131,7 @@ $(document).ready(function(){
 				var imageDiv = $(this).parent();
 				var file_path=$(this).parent().find('.path').val();
 				$.ajax({
-		            url:"<?php echo U('Index/delete');?>",
+		            url:"{:U('Index/delete')}",
 		            type:'POST',  /*提交方式*/
 		            data:'file_path='+file_path+'&confirm_tag='+$("#confirm_tag").val(),
 		            success:function(msg){ 
@@ -263,7 +250,7 @@ $(document).ready(function(){
 	                	var filepath = path[i];
 	                	
 	                	picHtml += "<div class='imageDiv' id=" + i + "> <i class='delbtn' title='删除'>删除</i>" +
-	                	"<img class='pimg' id='img" + filename + "' src='/Public/Uploads/"+ filepath +"' /> " +
+	                	"<img class='pimg' id='img" + filename + "' src='__PUBLIC__/Uploads/"+ filepath +"' /> " +
 	            		"<input type='hidden' name='pic[]' value='" + filename + "' /> " +
 	            		"<input type='hidden' id='path" + filename + "' name='path[]' value='" + filepath + "' class='path' /> " +
 	            		"</div>";
@@ -281,7 +268,7 @@ $(document).ready(function(){
 	  				  $("#confirm_tag").val("1");
 	  				  
 	  				  //下载水印图片
-	  			      var link="<?php echo U('Index/picDownload');?>?path="+path;
+	  			      var link="{:U('Index/picDownload')}?path="+path;
 	  			      $("#download").attr("href",link);
 	  			      $("#download").show();
 	  				  //alert(message);
